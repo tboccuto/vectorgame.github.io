@@ -51,7 +51,7 @@ let questions = [
     },
     {
         question : "What deoes the cross product between vectors A, B return?",
-        imgSrc : "img/js.png",
+        imgSrc : "img/crossProduct.png",
         choiceA : "Float",
         choiceB : "Vector",
         choiceC : "2D Matrix",
