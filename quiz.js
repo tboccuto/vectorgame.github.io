@@ -6,6 +6,7 @@ const qImg = document.getElementById("qImg");
 const choiceA = document.getElementById("A");
 const choiceB = document.getElementById("B");
 const choiceC = document.getElementById("C");
+const choiceD = document.getElementById("D");
 const counter = document.getElementById("counter");
 const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
@@ -14,41 +15,62 @@ const scoreDiv = document.getElementById("scoreContainer");
 // create our questions
 let questions = [
     {
-        question : "What does HTML stand for?",
-        imgSrc : "img/html.png",
-        choiceA : "Correct",
-        choiceB : "Wrong",
-        choiceC : "Wrong",
+        question : "Which of the following types does a dot product between matrices A, B return?",
+        imgSrc : "img/dotProduct.png",
+        choiceA : "Float",
+        choiceB : "2D Matrix",
+        choiceC : "Vector",
+        choiceD : "String",
         correct : "A"
     },{
-        question : "What does CSS stand for?",
-        imgSrc : "img/css.png",
-        choiceA : "Wrong",
-        choiceB : "Correct",
-        choiceC : "Wrong",
-        correct : "B"
+        question : "Let A, B be matrices and A* B, what must be true about the dimensions of A * B?",
+        imgSrc : "img/matrixMultiplication.png",
+        choiceA : "len(A)’s == len(B)’s column",
+        choiceB : "len(A)’s == len(A)’s column",
+        choiceC : "len(A)’s == len(B)’s Row",
+        choiceD : "It does not matter the shapes",
+        correct : "A"
     },{
-        question : "What does JS stand for?",
-        imgSrc : "img/js.png",
-        choiceA : "Wrong",
-        choiceB : "Wrong",
-        choiceC : "Correct",
-        correct : "C"
-    }
-];
+        question : "Who invented the complex number system",
+        imgSrc : "img/drScoville.png",
+        choiceA : "Gerolamo Cardano",
+        choiceB : "Professor Scoville",
+        choiceC : "Professor at Harvey Mudd",
+        choiceD : "Bridge contractors",
+        correct : "A"
+    },
 
-// create some variables
+    {
+        question : "What is another way to think about the magnitude of some vector",
+        imgSrc : "img/magnitude.png",
+        choiceA : "Direction",
+        choiceB : "Length",
+        choiceC : "Distance from Origin",
+        choiceD : "Some Theta between the vector and X axis",
+        correct : "B"
+    },
+    {
+        question : "What deoes the cross product between vectors A, B return?",
+        imgSrc : "img/js.png",
+        choiceA : "Float",
+        choiceB : "Vector",
+        choiceC : "2D Matrix",
+        choiceD : "String",
+        correct : "B"
+    },
+
+];
 
 const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
 let count = 0;
-const questionTime = 10; // 10s
+const questionTime = 60; // 10s
 const gaugeWidth = 150; // 150px
 const gaugeUnit = gaugeWidth / questionTime;
 let TIMER;
 let score = 0;
 
-// render a question
+// render question
 function renderQuestion(){
     let q = questions[runningQuestion];
     
@@ -57,6 +79,7 @@ function renderQuestion(){
     choiceA.innerHTML = q.choiceA;
     choiceB.innerHTML = q.choiceB;
     choiceC.innerHTML = q.choiceC;
+    choiceD.innerHTML = q.choiceD;
 }
 
 start.addEventListener("click",startQuiz);
@@ -79,7 +102,6 @@ function renderProgress(){
 }
 
 // counter render
-
 function renderCounter(){
     if(count <= questionTime){
         counter.innerHTML = count;
@@ -92,7 +114,8 @@ function renderCounter(){
         if(runningQuestion < lastQuestion){
             runningQuestion++;
             renderQuestion();
-        }else{
+        }
+        else{
             // end the quiz and show the score
             clearInterval(TIMER);
             scoreRender();
@@ -100,8 +123,7 @@ function renderCounter(){
     }
 }
 
-// checkAnwer
-
+// check answer
 function checkAnswer(answer){
     if( answer == questions[runningQuestion].correct){
         // answer is correct
@@ -124,12 +146,12 @@ function checkAnswer(answer){
     }
 }
 
-// answer is correct
+// answer is correct make green
 function answerIsCorrect(){
     document.getElementById(runningQuestion).style.backgroundColor = "#0f0";
 }
 
-// answer is Wrong
+// answer is Wrong make red
 function answerIsWrong(){
     document.getElementById(runningQuestion).style.backgroundColor = "#f00";
 }
