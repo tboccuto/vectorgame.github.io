@@ -109,7 +109,7 @@ function renderCounter(){
         counter.innerHTML = questionTime - count;
         timeGauge.style.width = (questionTime - count) * gaugeUnit + "px";
         decrementedCounter = decrementedCounter - count;
-        console.log(['here isthe count ,', decrementedCounter]);
+
     }if ((questionTime - count) === 0) {
         count = 0;
         // change progress color to red
