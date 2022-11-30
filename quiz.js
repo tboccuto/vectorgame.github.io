@@ -64,7 +64,7 @@ let questions = [
 const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
 let count = 0;
-const questionTime = 60; // 10s
+const questionTime = 60; //60; // 10s
 const gaugeWidth = 150; // 150px
 const gaugeUnit = gaugeWidth / questionTime;
 let TIMER;
@@ -91,7 +91,7 @@ function startQuiz(){
     quiz.style.display = "block";
     renderProgress();
     renderCounter();
-    TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
+    TIMER = setInterval(renderCounter,1000); // 1000ms 
 }
 
 // render progress
@@ -103,11 +103,14 @@ function renderProgress(){
 
 // counter render
 function renderCounter(){
-    if(count <= questionTime){
-        counter.innerHTML = count;
-        timeGauge.style.width = count * gaugeUnit + "px";
-        count++
-    }else{
+    let decrementedCounter = questionTime;
+    if(decrementedCounter <= questionTime){
+        count++;
+        counter.innerHTML = questionTime - count;
+        timeGauge.style.width = (questionTime - count) * gaugeUnit + "px";
+        decrementedCounter = decrementedCounter - count;
+        console.log(['here isthe count ,', decrementedCounter]);
+    }if ((questionTime - count) === 0) {
         count = 0;
         // change progress color to red
         answerIsWrong();
