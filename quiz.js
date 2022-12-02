@@ -3,6 +3,7 @@ const start = document.getElementById("start");
 const quiz = document.getElementById("quiz");
 const question = document.getElementById("question");
 const qImg = document.getElementById("qImg");
+const tralieHead = document.getElementById("tralieHead");
 const choiceA = document.getElementById("A");
 const choiceB = document.getElementById("B");
 const choiceC = document.getElementById("C");
@@ -73,7 +74,6 @@ let score = 0;
 // render question
 function renderQuestion(){
     let q = questions[runningQuestion];
-    
     question.innerHTML = "<p>"+ q.question +"</p>";
     qImg.innerHTML = "<img src="+ q.imgSrc +">";
     choiceA.innerHTML = q.choiceA;
@@ -86,6 +86,10 @@ start.addEventListener("click",startQuiz);
 
 // start quiz
 function startQuiz(){
+    // remove image upon clicking start button
+    var image = document.getElementById('tralieHead');
+    image.parentNode.removeChild(image);
+
     start.style.display = "none";
     renderQuestion();
     quiz.style.display = "block";

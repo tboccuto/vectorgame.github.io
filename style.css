@@ -3,6 +3,11 @@ body{
     font-family: monospace;
 }
 
+#tralieHead img{
+    height: 400px;
+    width : 700px; 
+}
+
 #container{
     margin : 20px auto;
     background-color: white;
