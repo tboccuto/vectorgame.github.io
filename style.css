@@ -151,6 +151,28 @@ body{
     font-weight: bold;
     text-align: center;
 }
+#practice {
+    padding: 30px 0;
+    text-align: center;
+    width: 700px; 
+    position: absolute;
+    border : 2px solid lightgrey;
+    border-radius: 5px;
+    margin: auto;
+    text-decoration: none;
+    color: green;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0px 5px 15px 0px;
+}
+#practice:hover{
+    background-color:green; 
+    transition:0.2s; 
+    text-decoration:none; 
+    color:#000
+}
+
+
 
 
 
