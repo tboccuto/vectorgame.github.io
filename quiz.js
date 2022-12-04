@@ -13,6 +13,7 @@ const counter = document.getElementById("counter");
 const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
 const scoreDiv = document.getElementById("scoreContainer");
+const practice = document.getElementById("practice");
 
 // create questions
 let questions = [
@@ -98,6 +99,9 @@ function startQuiz(){
     // remove image upon clicking start button
     var image = document.getElementById('tralieHead');
     image.parentNode.removeChild(image);
+    // remove vector link upon clicking start button
+    var practice = document.getElementById("practice");
+    practice.parentNode.removeChild(practice);
     start.style.display = "none";
     renderQuestion();
     quiz.style.display = "block";
