@@ -1,5 +1,4 @@
-# Multiple-Choice-Quiz-JavaScript
-Here is my final project for CS476 taught by Chris Tralie Phd. The goal of this game
-is to be a fun ice-breaker cooperative trivia game where the class works together to review concepts
-they learned either on their own or in linear alg or calculus III.
+# Vector Game for CS476
+## Final project for Computer Graphics, CS476 taught by Chris Tralie Phd.
+### link-to-play:  https://tboccuto.github.io/vectorgame.github.io/
 

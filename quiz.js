@@ -14,6 +14,10 @@ const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
 const scoreDiv = document.getElementById("scoreContainer");
 const practice = document.getElementById("practice");
+const dotProductButton = document.getElementById("dotProductButton");
+const crossProductButton = document.getElementById("crossProductButton");
+const matrixMultiplicationButton = document.getElementById("matrixMultiplicationButton");
+const homeButton = document.getElementById("homeButton");
 
 // create questions
 let questions = [

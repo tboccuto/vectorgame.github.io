@@ -1,7 +1,125 @@
-<html>
-  TODO: [1] implement this with https://plotly.com/javascript/3d-line-plots/
-        Consider the random generations of lines, compute some operation, 
-        then check the solution type in form against solution in glsl, consider rounding
-        for pen & paper work.
-        [2] also consider keeping index.html the only static page.
+<!DOCTYPE html>
+
+
+<header>
+  <a href="index.html">
+    <div id="container">
+      <div id = 'tralieHead'>
+          <img src="img/tralie3DHead.gif"/>
+          <div id="start">Home</div>
+      </div>
+    </div> 
+  </a>
+  <br>
+  <br>
+  Which operation would you like to practice with first?
+  <br>
+  <br>
+  <button name='button' id="dotProductButton"> Dot Product</button>
+  <button id="crossProductButton"> Cross Product</button>
+  <button id="matrixMultiplicationButton"> Matrix Multiplication</button>
+  <br>
+  <br>
+</header>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+  <script>
+    d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv', function(err, rows){
+      function unpack(rows, key) {
+          return rows.map(function(row)
+          { return row[key]; });
+      }
+
+var trace1 = {
+  x: unpack(rows, 'x1'),
+  y: unpack(rows, 'y1'),
+  z: unpack(rows, 'z1'),
+  mode: 'lines',
+  marker: {
+    color: '#1f77b4',
+    size: 12,
+    symbol: 'circle',
+    line: {
+      color: 'rgb(0,0,0)',
+      width: 0
+    }},
+  line: {
+    color: '#1f77b4',
+    width: 1
+  },
+  type: 'scatter3d'
+};
+
+var trace2 = {
+  x: unpack(rows, 'x2'),
+  y: unpack(rows, 'y2'),
+  z: unpack(rows, 'z2'),
+  mode: 'lines',
+  marker: {
+    color: '#9467bd',
+    size: 12,
+    symbol: 'circle',
+    line: {
+      color: 'rgb(0,0,0)',
+      width: 0
+    }},
+  line: {
+    color: 'rgb(44, 160, 44)',
+    width: 1
+  },
+  type: 'scatter3d'
+};
+
+var trace3 = {
+  x: unpack(rows, 'x3'),
+  y: unpack(rows, 'y3'),
+  z: unpack(rows, 'z3'),
+  mode: 'lines',
+  marker: {
+    color: '#bcbd22',
+    size: 12,
+    symbol: 'circle',
+    line: {
+      color: 'rgb(0,0,0)',
+      width: 0
+    }},
+  line: {
+    color: '#bcbd22',
+    width: 1
+  },
+  type: 'scatter3d'
+};
+
+var data = [trace1, trace2, trace3];
+var layout = {
+  title: '3D Line Plot',
+  autosize: false,
+  width: 500,
+  height: 500,
+  margin: {
+    l: 0,
+    r: 0,
+    b: 0,
+    t: 65
+  }
+};
+Plotly.newPlot('myDiv', data, layout);
+});
+  </script>
+</head>
+<body>
+	<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+</body>
+<form>
+  <br>
+  <label for="studentsAnswer">Submit your solution here row major order below</label><br>
+  <input type="text" id="studentAnswerForm" name="studentsAnswer" style="  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;"><br>
+</form>
 </html>
+
+
