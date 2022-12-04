@@ -1,3 +1,6 @@
+
+vec3 = glMatrix.vec3;
+mat4 = glMatrix.mat4;
 // select elements
 const start = document.getElementById("start");
 const randomizeQuestions = document.getElementById("randomQuestion")
@@ -18,6 +21,7 @@ const dotProductButton = document.getElementById("dotProductButton");
 const crossProductButton = document.getElementById("crossProductButton");
 const matrixMultiplicationButton = document.getElementById("matrixMultiplicationButton");
 const homeButton = document.getElementById("homeButton");
+const symbolicMath = document.getElementById("symbolicMath");
 
 // create questions
 let questions = [
@@ -196,6 +200,104 @@ function scoreRender(){
     scoreDiv.innerHTML = "<img src="+ img +">";
     scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
 }
+// generate random vector
+function generateRandomVector() {
+    let X = Math.floor(Math.random() * 75);
+    let Y = Math.floor(Math.random() * 75);
+    let Z = Math.floor(Math.random() * 75);
+    return vec3.fromValues(X, Y, Z);
+}
+// declare globaal variables
+v1 = vec3.create();
+v2 = vec3.create();
+M = mat4.create();
+dotProduct = 0;
+crssProduct = vec3.create();
+
+let opts = {
+    // ...options...
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.getElementById("symbolicMath"), opts);
+  });
+
+  function myFunction() {
+    var x = document.getElementById("symbolicMath");
+    x.innerHTML = "Find the definite integral \\(\\int_0^1 xdx.\\)"; 
+    renderMathInElement(x, opts);
+  }
+
+function clickDotProduct() {
+    let opts = {};
+    v1 = generateRandomVector();
+    v2 = generateRandomVector();
+    //document.getElementById('symbolicMath').innerHTML = "<p>"+ " $\\ \\lbrack " +v1[0]+ " & " + v1[1] + " & " +v2[2]+ " \\rbrack$" +"</p>"; 
+    var el = document.getElementById('symbolicMath').innerHTML = "<p>" + "$\\left\\{\\frac{1}{n^2}\\right\\}$" + "</p>";
+    renderMathInElement(el, opts);
+    dotProduct = vec3.dot(v1, v2);
+    return dotProduct;
+}
+// compute cross product
+document.getElementById('crossProductButton').onclick = function() {
+    v1 = generateRandomVector();
+    v2 = generateRandomVector();
+    crossProduct = vec3.cross(v1, v2);
+    return crossProduct;
+}
+// compute mult shape(4,4)
+document.getElementById('matrixMultiplicationButton').onclick = function() {
+    let M1 = mat4.fromValues(
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75)
+    );
+    let M2 = mat4.fromValues(
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 75)
+    );
+    M = mat4.multiply(M, M1, M2);
+    return M;
+}
+
+// javscript to laTex
+
+
+
+
+
+
+//console.log(v1);
+
+//console.log(generateRandomVector())
 
 
 
