@@ -22,6 +22,8 @@ const crossProductButton = document.getElementById("crossProductButton");
 const matrixMultiplicationButton = document.getElementById("matrixMultiplicationButton");
 const homeButton = document.getElementById("homeButton");
 const symbolicMath = document.getElementById("symbolicMath");
+const renderPlot = document.getElementById("renderPlotButton");
+const plotButton = document.getElementById("myDiv");
 
 // create questions
 let questions = [
@@ -213,6 +215,7 @@ v2 = vec3.create();
 M = mat4.create();
 dotProduct = 0;
 crssProduct = vec3.create();
+nameOfPlot = "3D Vector Plot";
 
 //https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
 let opts = {}
@@ -265,7 +268,6 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
         Math.floor(Math.random() * 75),
         Math.floor(Math.random() * 75),
         Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75)
     );
     let M2 = mat4.fromValues(
         Math.floor(Math.random() * 75),
@@ -284,33 +286,130 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
         Math.floor(Math.random() * 75),
         Math.floor(Math.random() * 75),
         Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75)
     );
     // TODO: fix bug with concatenation
     var x = document.getElementById("symbolicMath");
     x.innerHTML += " \\(\\begin{bmatrix}" 
-    for(let i = 1; i <= 12; i++) {
-        x.innerHTML += M1[i-1].toString() + " & " + M1[i].toString();
-        if (i > 0 && i % 3 === 0) {
+    for(let i = 0; i < 12; i++) {
+        if ((i + 1) % 4 === 0) {
+            x.innerHTML += M1[i].toString();
             x.innerHTML += '\\\\';
             x.innerHTML += '\n';   
         }
+        else {
+            x.innerHTML += M1[i].toString() + " & ";
+        }
     }
-    x.innerHTML += M1[13].toString()+" & "+M1[13].toString()+" & "+ +M1[14].toString()+" & " + +M1[15].toString();
+    x.innerHTML += M1[12].toString()+" & "+M1[14].toString()+" & "+ +M1[14].toString()+" & " + +M1[15].toString();
     x.innerHTML += "\\end{bmatrix}\\)";
     renderMathInElement(x, opts); 
-    
     x.innerHTML += " \\(\\begin{bmatrix}" 
-    for(let i = 1; i <= 12; i++) {
-        x.innerHTML += M2[i-1].toString() + " & " + M2[i].toString();
-        if (i > 0 && i % 3 === 0) {
+    for(let i = 0; i < 12; i++) {
+        if ((i + 1) % 4 === 0) {
+            x.innerHTML += M2[i].toString();
             x.innerHTML += '\\\\';
             x.innerHTML += '\n';   
         }
+        else {
+            x.innerHTML += M1[i].toString() + " & ";
+        }
     }
-    x.innerHTML += M2[13].toString()+" & "+M2[13].toString()+" & "+ +M2[14].toString()+" & " + +M2[15].toString();
+    x.innerHTML += M2[12].toString()+" & "+M2[13].toString()+" & "+ +M2[14].toString()+" & " + +M2[15].toString();
     x.innerHTML += "\\end{bmatrix}\\)";
     renderMathInElement(x, opts);
     M = mat4.multiply(M, M1, M2);
     return M;
 }
+
+document.getElementById('renderPlotButton').onclick = function() {
+    d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv', function(err, rows){
+            function unpack(rows, key) {
+                return rows.map(function(row)
+                { return row[key]; });
+    }
+    var trace1 = {
+        x: unpack(rows, 'x1'),
+        y: unpack(rows, 'y1'),
+        z: unpack(rows, 'z1'),
+        mode: 'lines',
+        marker: {
+        color: '#1f77b4',
+        size: 12,
+        symbol: 'circle',
+        line: {
+            color: 'rgb(0,0,0)',
+            width: 0
+        }},
+        line: {
+        color: '#1f77b4',
+        width: 1
+        },
+        type: 'scatter3d'
+    };
+    
+    var trace2 = {
+        x: unpack(rows, 'x2'),
+        y: unpack(rows, 'y2'),
+        z: unpack(rows, 'z2'),
+        mode: 'lines',
+        marker: {
+        color: '#9467bd',
+        size: 12,
+        symbol: 'circle',
+        line: {
+            color: 'rgb(0,0,0)',
+            width: 0
+        }},
+        line: {
+        color: 'rgb(44, 160, 44)',
+        width: 1
+        },
+        type: 'scatter3d'
+    };
+    
+    var trace3 = {
+        x: unpack(rows, 'x3'),
+        y: unpack(rows, 'y3'),
+        z: unpack(rows, 'z3'),
+        mode: 'lines',
+        marker: {
+        color: '#bcbd22',
+        size: 12,
+        symbol: 'circle',
+        line: {
+            color: 'rgb(0,0,0)',
+            width: 0
+        }},
+        line: {
+        color: '#bcbd22',
+        width: 1
+        },
+        type: 'scatter3d'
+    };
+    
+    var data = [trace1, trace2, trace3];
+    var layout = {
+        title: nameOfPlot,
+        autosize: false,
+        width: 500,
+        height: 500,
+        margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 65
+        }
+    };
+    Plotly.newPlot('myDiv', data, layout);
+    });
+
+}
+
+
+
+
+
+
+
+
+

@@ -8,3 +8,11 @@
         [4] If time permits, have a plug-in of some work we have done in CS476.
        ✅ [5] Now we need to incoroporate the random generation of vectors
        [6] Fix bug in concatenation mat mult KaTex 
+       [7] need to remove latex code upon clicking another button ie clear current latex if button clicked again
+       [8] have plot showing then upon update plot button clear plot see plot 1 for rest
+
+
+
+
+
+       
