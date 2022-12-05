@@ -7,4 +7,4 @@
         dot product, cross product.
         [4] If time permits, have a plug-in of some work we have done in CS476.
        ✅ [5] Now we need to incoroporate the random generation of vectors
-        
+       [6] Fix bug in concatenation mat mult KaTex 

@@ -214,33 +214,35 @@ M = mat4.create();
 dotProduct = 0;
 crssProduct = vec3.create();
 
-let opts = {
-    // ...options...
-  }
+//https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
+let opts = {}
+
   document.addEventListener("DOMContentLoaded", function() {
     renderMathInElement(document.getElementById("symbolicMath"), opts);
   });
 
-  function myFunction() {
-    var x = document.getElementById("symbolicMath");
-    x.innerHTML = "Find the definite integral \\(\\int_0^1 xdx.\\)"; 
-    renderMathInElement(x, opts);
-  }
-
-function clickDotProduct() {
-    let opts = {};
+  document.getElementById('dotProductButton').onclick = function() { 
     v1 = generateRandomVector();
-    v2 = generateRandomVector();
-    //document.getElementById('symbolicMath').innerHTML = "<p>"+ " $\\ \\lbrack " +v1[0]+ " & " + v1[1] + " & " +v2[2]+ " \\rbrack$" +"</p>"; 
-    var el = document.getElementById('symbolicMath').innerHTML = "<p>" + "$\\left\\{\\frac{1}{n^2}\\right\\}$" + "</p>";
-    renderMathInElement(el, opts);
+    v2 = generateRandomVector(); 
+    var x = document.getElementById("symbolicMath");
+    x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
+    x.innerHTML  += " \\(\\cdot \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
+    renderMathInElement(x, opts);
     dotProduct = vec3.dot(v1, v2);
     return dotProduct;
-}
+  }
+
 // compute cross product
 document.getElementById('crossProductButton').onclick = function() {
     v1 = generateRandomVector();
     v2 = generateRandomVector();
+    var x = document.getElementById("symbolicMath");
+    x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
+    x.innerHTML  += " \\(\\times \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
+    renderMathInElement(x, opts);
+    dotProduct = vec3.cross(v1, v2);
+    
+
     crossProduct = vec3.cross(v1, v2);
     return crossProduct;
 }
@@ -284,38 +286,31 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
         Math.floor(Math.random() * 75),
         Math.floor(Math.random() * 75)
     );
+    // TODO: fix bug with concatenation
+    var x = document.getElementById("symbolicMath");
+    x.innerHTML += " \\(\\begin{bmatrix}" 
+    for(let i = 1; i <= 12; i++) {
+        x.innerHTML += M1[i-1].toString() + " & " + M1[i].toString();
+        if (i > 0 && i % 3 === 0) {
+            x.innerHTML += '\\\\';
+            x.innerHTML += '\n';   
+        }
+    }
+    x.innerHTML += M1[13].toString()+" & "+M1[13].toString()+" & "+ +M1[14].toString()+" & " + +M1[15].toString();
+    x.innerHTML += "\\end{bmatrix}\\)";
+    renderMathInElement(x, opts); 
+    
+    x.innerHTML += " \\(\\begin{bmatrix}" 
+    for(let i = 1; i <= 12; i++) {
+        x.innerHTML += M2[i-1].toString() + " & " + M2[i].toString();
+        if (i > 0 && i % 3 === 0) {
+            x.innerHTML += '\\\\';
+            x.innerHTML += '\n';   
+        }
+    }
+    x.innerHTML += M2[13].toString()+" & "+M2[13].toString()+" & "+ +M2[14].toString()+" & " + +M2[15].toString();
+    x.innerHTML += "\\end{bmatrix}\\)";
+    renderMathInElement(x, opts);
     M = mat4.multiply(M, M1, M2);
     return M;
 }
-
-// javscript to laTex
-
-
-
-
-
-
-//console.log(v1);
-
-//console.log(generateRandomVector())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
