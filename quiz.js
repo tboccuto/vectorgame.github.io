@@ -214,7 +214,7 @@ v1 = vec3.create();
 v2 = vec3.create();
 M = mat4.create();
 dotProduct = 0;
-crssProduct = vec3.create();
+crossProduct = vec3.create();
 nameOfPlot = "3D Vector Plot";
 
 //https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
@@ -225,9 +225,10 @@ let opts = {}
   });
 
   document.getElementById('dotProductButton').onclick = function() { 
+    var x = document.getElementById("symbolicMath"); 
     v1 = generateRandomVector();
     v2 = generateRandomVector(); 
-    var x = document.getElementById("symbolicMath");
+    x.innerHTML = "";
     x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
     x.innerHTML  += " \\(\\cdot \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
     renderMathInElement(x, opts);
@@ -237,16 +238,14 @@ let opts = {}
 
 // compute cross product
 document.getElementById('crossProductButton').onclick = function() {
+    var x = document.getElementById("symbolicMath");
     v1 = generateRandomVector();
     v2 = generateRandomVector();
-    var x = document.getElementById("symbolicMath");
+    x.innerHTML = "";
     x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
     x.innerHTML  += " \\(\\times \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
     renderMathInElement(x, opts);
-    dotProduct = vec3.cross(v1, v2);
-    
-
-    crossProduct = vec3.cross(v1, v2);
+    crossProduct = vec3.cross(crossProduct, v1, v2);
     return crossProduct;
 }
 // compute mult shape(4,4)
