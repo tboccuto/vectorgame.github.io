@@ -10,9 +10,9 @@
        [6] Fix bug in concatenation mat mult KaTex 
        [7] need to remove latex code upon clicking another button ie clear current latex if button clicked again
        [8] have plot showing then upon update plot button clear plot see plot 1 for rest
+       [9] add sa
 
 
 
 
 
-       

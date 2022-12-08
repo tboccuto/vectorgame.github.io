@@ -24,6 +24,7 @@ const homeButton = document.getElementById("homeButton");
 const symbolicMath = document.getElementById("symbolicMath");
 const renderPlot = document.getElementById("renderPlotButton");
 const plotButton = document.getElementById("myDiv");
+const surfaceContour = document.getElementById("surfaceContourButton");
 
 // create questions
 let questions = [
@@ -288,6 +289,7 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
     );
     // TODO: fix bug with concatenation
     var x = document.getElementById("symbolicMath");
+    x.innerHTML = "";
     x.innerHTML += " \\(\\begin{bmatrix}" 
     for(let i = 0; i < 12; i++) {
         if ((i + 1) % 4 === 0) {
@@ -321,94 +323,64 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
 }
 
 document.getElementById('renderPlotButton').onclick = function() {
-    d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv', function(err, rows){
-            function unpack(rows, key) {
-                return rows.map(function(row)
-                { return row[key]; });
-    }
-    var trace1 = {
-        x: unpack(rows, 'x1'),
-        y: unpack(rows, 'y1'),
-        z: unpack(rows, 'z1'),
-        mode: 'lines',
-        marker: {
-        color: '#1f77b4',
-        size: 12,
-        symbol: 'circle',
-        line: {
-            color: 'rgb(0,0,0)',
-            width: 0
-        }},
-        line: {
-        color: '#1f77b4',
-        width: 1
-        },
-        type: 'scatter3d'
-    };
-    
-    var trace2 = {
-        x: unpack(rows, 'x2'),
-        y: unpack(rows, 'y2'),
-        z: unpack(rows, 'z2'),
-        mode: 'lines',
-        marker: {
-        color: '#9467bd',
-        size: 12,
-        symbol: 'circle',
-        line: {
-            color: 'rgb(0,0,0)',
-            width: 0
-        }},
-        line: {
-        color: 'rgb(44, 160, 44)',
-        width: 1
-        },
-        type: 'scatter3d'
-    };
-    
-    var trace3 = {
-        x: unpack(rows, 'x3'),
-        y: unpack(rows, 'y3'),
-        z: unpack(rows, 'z3'),
-        mode: 'lines',
-        marker: {
-        color: '#bcbd22',
-        size: 12,
-        symbol: 'circle',
-        line: {
-            color: 'rgb(0,0,0)',
-            width: 0
-        }},
-        line: {
-        color: '#bcbd22',
-        width: 1
-        },
-        type: 'scatter3d'
-    };
-    
-    var data = [trace1, trace2, trace3];
-    var layout = {
-        title: nameOfPlot,
-        autosize: false,
-        width: 500,
-        height: 500,
-        margin: {
-        l: 0,
-        r: 0,
-        b: 0,
-        t: 65
-        }
-    };
-    Plotly.newPlot('myDiv', data, layout);
-    });
+    var x = document.getElementById("myDiv");
+    x.innerHTML = "";
 
+
+   
 }
 
+document.getElementById('surfaceContourButton').onclick = function() {
+    var x = document.getElementById("myDiv");
+    x.innerHTML = "";
+    d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
+function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
+}
+var z_data=[ ]
+for(i=0;i<24;i++)
+{
+  z_data.push(unpack(rows,i));
+}
+
+var data = [{
+  z: z_data,
+  type: 'surface',
+  contours: {
+    z: {
+      show:true,
+      usecolormap: true,
+      highlightcolor:"#42f462",
+      project:{z: true}
+    }
+  }
+}];
+
+var layout = {
+  title: 'Saddle Point Mt Bruno Elevation With Projected Contours',
+  scene: {camera: {eye: {x: 1.87, y: 0.88, z: -0.64}}},
+  autosize: false,
+  width: 500,
+  height: 500,
+  margin: {
+    l: 65,
+    r: 50,
+    b: 65,
+    t: 90,
+  }
+};
+
+Plotly.newPlot('myDiv', data, layout);
+Plotly.addTraces('myDiv', [{
+    type: 'scatter3d',
+    color: '#00FF00',
+    name: 'Saddle Point',
+    x:[12], 
+    y:[6], 
+    z:[57],
+     }])
+});
 
 
-
-
-
-
-
+} 
 
