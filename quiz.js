@@ -22,9 +22,10 @@ const crossProductButton = document.getElementById("crossProductButton");
 const matrixMultiplicationButton = document.getElementById("matrixMultiplicationButton");
 const homeButton = document.getElementById("homeButton");
 const symbolicMath = document.getElementById("symbolicMath");
-const renderPlot = document.getElementById("renderPlotButton");
 const plotButton = document.getElementById("myDiv");
 const surfaceContour = document.getElementById("surfaceContourButton");
+const studentAnswerFormText = document.getElementById("studentAnswerForm");
+const submitForm = document.getElementById("submitSolution");
 
 // create questions
 let questions = [
@@ -64,7 +65,7 @@ let questions = [
         correct : "B"
     },
     {
-        question : "What deoes the cross product between vectors A, B return?",
+        question : "What does the cross product between vectors A, B return?",
         imgSrc : "img/crossProduct.png",
         choiceA : "Float",
         choiceB : "Vector",
@@ -205,9 +206,9 @@ function scoreRender(){
 }
 // generate random vector
 function generateRandomVector() {
-    let X = Math.floor(Math.random() * 75);
-    let Y = Math.floor(Math.random() * 75);
-    let Z = Math.floor(Math.random() * 75);
+    let X = Math.floor(Math.random() * 10);
+    let Y = Math.floor(Math.random() * 10);
+    let Z = Math.floor(Math.random() * 10);
     return vec3.fromValues(X, Y, Z);
 }
 // declare globaal variables
@@ -216,8 +217,7 @@ v2 = vec3.create();
 M = mat4.create();
 dotProduct = 0;
 crossProduct = vec3.create();
-nameOfPlot = "3D Vector Plot";
-
+title = "";
 //https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
 let opts = {}
 
@@ -226,6 +226,7 @@ let opts = {}
   });
 
   document.getElementById('dotProductButton').onclick = function() { 
+    title = "";
     var x = document.getElementById("symbolicMath"); 
     v1 = generateRandomVector();
     v2 = generateRandomVector(); 
@@ -234,11 +235,44 @@ let opts = {}
     x.innerHTML  += " \\(\\cdot \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
     renderMathInElement(x, opts);
     dotProduct = vec3.dot(v1, v2);
+    console.log(dotProduct)
+    //TODO: plotly plot
+    var trace1 = {
+        x: [v1[0], 0],
+        y: [v1[1], 0],
+        z: [v1[2], 0],
+        type:'scatter3d',
+        name: 'v1',
+        mode:'lines+markers',
+       
+    }
+    var trace2 = {
+        x: [v2[0], 0],
+        y: [v2[1], 0],
+        z: [v2[0], 0],
+        type:'scatter3d',
+        name: 'v2',
+        mode:'lines+markers',
+    }
+    //origin
+    var trace3 = {
+        x: [0],
+        y: [0],
+        z: [0],
+        type:'scatter3d',
+        name: 'origin',
+        mode:'lines+markers'
+    }
+    title = 'Dot Vectors v1, v2';
+    var data = [trace1, trace2, trace3];
+    var layout = {title: title}
+    Plotly.newPlot('myDiv', data, layout);
     return dotProduct;
   }
 
 // compute cross product
 document.getElementById('crossProductButton').onclick = function() {
+    title = "";
     var x = document.getElementById("symbolicMath");
     v1 = generateRandomVector();
     v2 = generateRandomVector();
@@ -247,47 +281,89 @@ document.getElementById('crossProductButton').onclick = function() {
     x.innerHTML  += " \\(\\times \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
     renderMathInElement(x, opts);
     crossProduct = vec3.cross(crossProduct, v1, v2);
+    console.log(crossProduct)
+    //TODO: plotly plot
+    var trace1 = {
+        x: [v1[0], 0],
+        y: [v1[1], 0],
+        z: [v1[2], 0],
+        type:'scatter3d',
+        name: 'v1',
+        mode:'lines+markers',
+       
+    }
+    var trace2 = {
+        x: [v2[0], 0],
+        y: [v2[1], 0],
+        z: [v2[2], 0],
+        type:'scatter3d',
+        name: 'v2',
+        mode:'lines+markers',
+    }
+
+    var trace3 = {
+        x: [crossProduct[0], 0],
+        y: [crossProduct[1], 0],
+        z: [crossProduct[2], 0],
+        type: 'scatter3d',
+        name: 'cross(v1, v2)',
+        mode: 'lines+markers'
+    }
+
+    //origin
+    var trace4 = {
+        x: [0],
+        y: [0],
+        z: [0],
+        type:'scatter3d',
+        name: 'origin',
+        mode:'lines+markers'
+    }
+    title = "Cross Vectors v1, v2";
+    var data = [trace1, trace2, trace3, trace4];
+    var layout = {title: title}
+    Plotly.newPlot('myDiv', data, layout);
     return crossProduct;
 }
 // compute mult shape(4,4)
 document.getElementById('matrixMultiplicationButton').onclick = function() {
+    var x = document.getElementById('myDiv').innerHTML = "";
     let M1 = mat4.fromValues(
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
     );
     let M2 = mat4.fromValues(
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
-        Math.floor(Math.random() * 75),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
     );
-    // TODO: fix bug with concatenation
     var x = document.getElementById("symbolicMath");
     x.innerHTML = "";
     x.innerHTML += " \\(\\begin{bmatrix}" 
@@ -322,14 +398,6 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
     return M;
 }
 
-document.getElementById('renderPlotButton').onclick = function() {
-    var x = document.getElementById("myDiv");
-    x.innerHTML = "";
-
-
-   
-}
-
 document.getElementById('surfaceContourButton').onclick = function() {
     var x = document.getElementById("myDiv");
     x.innerHTML = "";
@@ -338,8 +406,7 @@ function unpack(rows, key) {
   return rows.map(function(row) { return row[key]; });
 }
 var z_data=[ ]
-for(i=0;i<24;i++)
-{
+for(i=0;i<24;i++) {
   z_data.push(unpack(rows,i));
 }
 
@@ -356,6 +423,8 @@ var data = [{
   }
 }];
 
+let saddlePoint = [12, 6, 57];
+
 var layout = {
   title: 'Saddle Point Mt Bruno Elevation With Projected Contours',
   scene: {camera: {eye: {x: 1.87, y: 0.88, z: -0.64}}},
@@ -367,20 +436,49 @@ var layout = {
     r: 50,
     b: 65,
     t: 90,
-  }
-};
+  },
+ };
 
 Plotly.newPlot('myDiv', data, layout);
 Plotly.addTraces('myDiv', [{
     type: 'scatter3d',
-    color: '#00FF00',
     name: 'Saddle Point',
     x:[12], 
     y:[6], 
     z:[57],
      }])
 });
-
-
 } 
+
+document.getElementById("submitSolution").onclick = function() {
+    var form = document.getElementById("studentAnswerForm").value
+    console.log(title)
+    if (title.substring(0, 1) === 'D') {
+        console.log('true')
+        if (parseInt(form) === parseInt(dotProduct)) {
+            console.log("correct");
+        }
+    }
+    if (title.substring(0, 1) === 'C') {
+        console.log('true');
+        form = form.split(',');
+        console.log(form)
+        if (parseInt(form[0]) === parseInt(crossProduct[0]) && 
+            parseInt(form[1]) === parseInt(crossProduct[1]) &&
+            parseInt(form[2]) === parseInt(crossProduct[2])) {
+            console.log('correct')
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 

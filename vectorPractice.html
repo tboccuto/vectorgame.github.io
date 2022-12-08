@@ -27,7 +27,6 @@
  </head>
 <body>
   <p id="symbolicMath"></p>
-  <button id ="renderPlotButton">Update Plot</button>
 	<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV -->
     <script>
     d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv', function(err, rows){
@@ -118,12 +117,13 @@
 
 <form>
   <br>
-  <label for="studentsAnswer">Submit your solution below row major order</label><br>
+  <label form="studentsAnswer">Submit your solution below row major order</label><br>
   <input type="text" id="studentAnswerForm" name="studentsAnswer" style="  width: 60%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;"><br>
 </form>
+<button id = "submitSolution">Submit</button>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.css" integrity="sha384-Juol1FqnotbkyZUT5Z7gUPjQ9gzlwCENvUZTpQBAPxtusdwFLRy382PSDx5UUJ4/" crossorigin="anonymous">
 <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
