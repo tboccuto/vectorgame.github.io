@@ -211,6 +211,7 @@ function generateRandomVector() {
     let Z = Math.floor(Math.random() * 10);
     return vec3.fromValues(X, Y, Z);
 }
+
 // declare globaal variables
 v1 = vec3.create();
 v2 = vec3.create();
@@ -218,6 +219,7 @@ M = mat4.create();
 dotProduct = 0;
 crossProduct = vec3.create();
 title = "";
+M = 0;
 //https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
 let opts = {}
 
@@ -249,7 +251,7 @@ let opts = {}
     var trace2 = {
         x: [v2[0], 0],
         y: [v2[1], 0],
-        z: [v2[0], 0],
+        z: [v2[2], 0],
         type:'scatter3d',
         name: 'v2',
         mode:'lines+markers',
@@ -328,6 +330,7 @@ document.getElementById('crossProductButton').onclick = function() {
 // compute mult shape(4,4)
 document.getElementById('matrixMultiplicationButton').onclick = function() {
     var x = document.getElementById('myDiv').innerHTML = "";
+    title = "";
     let M1 = mat4.fromValues(
         Math.floor(Math.random() * 10),
         Math.floor(Math.random() * 10),
@@ -394,7 +397,11 @@ document.getElementById('matrixMultiplicationButton').onclick = function() {
     x.innerHTML += M2[12].toString()+" & "+M2[13].toString()+" & "+ +M2[14].toString()+" & " + +M2[15].toString();
     x.innerHTML += "\\end{bmatrix}\\)";
     renderMathInElement(x, opts);
+    console.log(['here is M1, :', M1]);
+    console.log(['here is M2: ', M2])
+    M = mat4.create();
     M = mat4.multiply(M, M1, M2);
+    console.log(M);
     return M;
 }
 
@@ -451,14 +458,19 @@ Plotly.addTraces('myDiv', [{
 } 
 
 document.getElementById("submitSolution").onclick = function() {
-    var form = document.getElementById("studentAnswerForm").value
+    let form = document.getElementById("studentAnswerForm").value
     console.log(title)
+    //dot
     if (title.substring(0, 1) === 'D') {
         console.log('true')
         if (parseInt(form) === parseInt(dotProduct)) {
             console.log("correct");
         }
+        else {
+            console.log('incorrect');
+        }
     }
+    // cross
     if (title.substring(0, 1) === 'C') {
         console.log('true');
         form = form.split(',');
@@ -468,7 +480,37 @@ document.getElementById("submitSolution").onclick = function() {
             parseInt(form[2]) === parseInt(crossProduct[2])) {
             console.log('correct')
         }
+        else {
+            console.log('incorrect');
+        }
     }
+    // mult 4
+    let res = []
+    if (title === "" && form != null) {
+        if (form.constructor != Array) {
+            form = form.split(',').map(Number);
+            console.log(form)
+            console.log('hi')
+        }
+        
+        for(let i = 0; i < form.length; i ++) {
+            res.push(form[i]);
+        } 
+        let formMat4 = mat4.fromValues(
+            res[0],res[1], res[2], res[3],
+            res[4], res[5], res[6], res[7],
+            res[8], res[9], res[10], res[11],
+            res[12], res[13], res[14], res[15]
+        )
+
+        console.log(['here is Answer: ', M, 'Here is form ', formMat4]);
+        if (mat4.equals(M, formMat4)) {
+            console.log('correct');
+        }
+        if (!mat4.equals(M, formMat4)) {
+            console.log('incorrect')
+        }
+    }   
 }
 
 
