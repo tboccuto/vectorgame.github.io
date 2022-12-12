@@ -1,6 +1,4 @@
 
-vec3 = glMatrix.vec3;
-mat4 = glMatrix.mat4;
 // select elements
 const start = document.getElementById("start");
 const randomizeQuestions = document.getElementById("randomQuestion")
@@ -26,8 +24,23 @@ const plotButton = document.getElementById("myDiv");
 const surfaceContour = document.getElementById("surfaceContourButton");
 const studentAnswerFormText = document.getElementById("studentAnswerForm");
 const submitForm = document.getElementById("submitSolution");
+const myCanvasID = document.getElementById("myCanvas");
 
-// create questions
+//Warm up question
+document.getElementById("bonusQuestionButton").addEventListener('click', bonusButtonClick)
+function bonusButtonClick () {
+    if (parseInt(document.getElementById("bonusAnswerForm").value) === 1) {
+        //document.getElementById("tonyHawk").innerHTML += 'img/communistManifestoTralie.jpeg';
+        document.getElementById('tonyHawk').innerHTML += "That is correct! \n Refresh the page if desired ig"+ "<br> <br> <br>";
+        let image = document.getElementById('tonyHawkImg').src ='img/communistManifestoTralie.jpeg';
+        let timer = 30;
+        let audio = new Audio('audio/celebration.mp3');
+        audio.play();
+   }
+    else {alert("you are 1 value away form the correct answer!")}
+}
+
+// Create questions
 let questions = [
     {
         question : "Which of the following types does a dot product between matrices A, B return?",
@@ -111,7 +124,13 @@ function startQuiz(){
     // remove image upon clicking start button
     var image = document.getElementById('tralieHead');
     image.parentNode.removeChild(image);
-    // remove vector link upon clicking start button
+    // remove vector link upon clicking start buttonA
+    var c = document.getElementById('myCanvas');
+    c.parentNode.removeChild(c);
+    // remove bonus question upon start quiz
+    var bonusDiv = document.getElementById("bonus-div");
+    bonusDiv.parentNode.removeChild(bonusDiv);
+    // remove practice link upon start quiz
     var practice = document.getElementById("practice");
     practice.parentNode.removeChild(practice);
     start.style.display = "none";
@@ -204,323 +223,3 @@ function scoreRender(){
     scoreDiv.innerHTML = "<img src="+ img +">";
     scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
 }
-// generate random vector
-function generateRandomVector() {
-    let X = Math.floor(Math.random() * 10);
-    let Y = Math.floor(Math.random() * 10);
-    let Z = Math.floor(Math.random() * 10);
-    return vec3.fromValues(X, Y, Z);
-}
-
-// declare globaal variables
-v1 = vec3.create();
-v2 = vec3.create();
-M = mat4.create();
-dotProduct = 0;
-crossProduct = vec3.create();
-title = "";
-M = 0;
-//https://stackoverflow.com/questions/58040112/how-to-use-katex-auto-renderer-in-dynamically-changing-html
-let opts = {}
-
-  document.addEventListener("DOMContentLoaded", function() {
-    renderMathInElement(document.getElementById("symbolicMath"), opts);
-  });
-
-  document.getElementById('dotProductButton').onclick = function() { 
-    title = "";
-    var x = document.getElementById("symbolicMath"); 
-    v1 = generateRandomVector();
-    v2 = generateRandomVector(); 
-    x.innerHTML = "";
-    x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
-    x.innerHTML  += " \\(\\cdot \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
-    renderMathInElement(x, opts);
-    dotProduct = vec3.dot(v1, v2);
-    console.log(dotProduct)
-    //TODO: plotly plot
-    var trace1 = {
-        x: [v1[0], 0],
-        y: [v1[1], 0],
-        z: [v1[2], 0],
-        type:'scatter3d',
-        name: 'v1',
-        mode:'lines+markers',
-       
-    }
-    var trace2 = {
-        x: [v2[0], 0],
-        y: [v2[1], 0],
-        z: [v2[2], 0],
-        type:'scatter3d',
-        name: 'v2',
-        mode:'lines+markers',
-    }
-    //origin
-    var trace3 = {
-        x: [0],
-        y: [0],
-        z: [0],
-        type:'scatter3d',
-        name: 'origin',
-        mode:'lines+markers'
-    }
-    title = 'Dot Vectors v1, v2';
-    var data = [trace1, trace2, trace3];
-    var layout = {title: title}
-    Plotly.newPlot('myDiv', data, layout);
-    return dotProduct;
-  }
-
-// compute cross product
-document.getElementById('crossProductButton').onclick = function() {
-    title = "";
-    var x = document.getElementById("symbolicMath");
-    v1 = generateRandomVector();
-    v2 = generateRandomVector();
-    x.innerHTML = "";
-    x.innerHTML += " \\(\\lbrack " + v1[0].toString()+', '+v1[1].toString() +', '+ v1[2].toString()+ " \\rbrack\\)";
-    x.innerHTML  += " \\(\\times \\lbrack " + v2[0].toString()+', '+v2[1].toString() +', '+ v2[2].toString()+ " \\rbrack\\)"; 
-    renderMathInElement(x, opts);
-    crossProduct = vec3.cross(crossProduct, v1, v2);
-    console.log(crossProduct)
-    //TODO: plotly plot
-    var trace1 = {
-        x: [v1[0], 0],
-        y: [v1[1], 0],
-        z: [v1[2], 0],
-        type:'scatter3d',
-        name: 'v1',
-        mode:'lines+markers',
-       
-    }
-    var trace2 = {
-        x: [v2[0], 0],
-        y: [v2[1], 0],
-        z: [v2[2], 0],
-        type:'scatter3d',
-        name: 'v2',
-        mode:'lines+markers',
-    }
-
-    var trace3 = {
-        x: [crossProduct[0], 0],
-        y: [crossProduct[1], 0],
-        z: [crossProduct[2], 0],
-        type: 'scatter3d',
-        name: 'cross(v1, v2)',
-        mode: 'lines+markers'
-    }
-
-    //origin
-    var trace4 = {
-        x: [0],
-        y: [0],
-        z: [0],
-        type:'scatter3d',
-        name: 'origin',
-        mode:'lines+markers'
-    }
-    title = "Cross Vectors v1, v2";
-    var data = [trace1, trace2, trace3, trace4];
-    var layout = {title: title}
-    Plotly.newPlot('myDiv', data, layout);
-    return crossProduct;
-}
-// compute mult shape(4,4)
-document.getElementById('matrixMultiplicationButton').onclick = function() {
-    var x = document.getElementById('myDiv').innerHTML = "";
-    title = "";
-    let M1 = mat4.fromValues(
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-    );
-    let M2 = mat4.fromValues(
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-        Math.floor(Math.random() * 10),
-    );
-    var x = document.getElementById("symbolicMath");
-    x.innerHTML = "";
-    x.innerHTML += " \\(\\begin{bmatrix}" 
-    for(let i = 0; i < 12; i++) {
-        if ((i + 1) % 4 === 0) {
-            x.innerHTML += M1[i].toString();
-            x.innerHTML += '\\\\';
-            x.innerHTML += '\n';   
-        }
-        else {
-            x.innerHTML += M1[i].toString() + " & ";
-        }
-    }
-    x.innerHTML += M1[12].toString()+" & "+M1[14].toString()+" & "+ +M1[14].toString()+" & " + +M1[15].toString();
-    x.innerHTML += "\\end{bmatrix}\\)";
-    renderMathInElement(x, opts); 
-    x.innerHTML += " \\(\\begin{bmatrix}" 
-    for(let i = 0; i < 12; i++) {
-        if ((i + 1) % 4 === 0) {
-            x.innerHTML += M2[i].toString();
-            x.innerHTML += '\\\\';
-            x.innerHTML += '\n';   
-        }
-        else {
-            x.innerHTML += M1[i].toString() + " & ";
-        }
-    }
-    x.innerHTML += M2[12].toString()+" & "+M2[13].toString()+" & "+ +M2[14].toString()+" & " + +M2[15].toString();
-    x.innerHTML += "\\end{bmatrix}\\)";
-    renderMathInElement(x, opts);
-    console.log(['here is M1, :', M1]);
-    console.log(['here is M2: ', M2])
-    M = mat4.create();
-    M = mat4.multiply(M, M1, M2);
-    console.log(M);
-    return M;
-}
-
-document.getElementById('surfaceContourButton').onclick = function() {
-    var x = document.getElementById("myDiv");
-    x.innerHTML = "";
-    d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv', function(err, rows){
-function unpack(rows, key) {
-  return rows.map(function(row) { return row[key]; });
-}
-var z_data=[ ]
-for(i=0;i<24;i++) {
-  z_data.push(unpack(rows,i));
-}
-
-var data = [{
-  z: z_data,
-  type: 'surface',
-  contours: {
-    z: {
-      show:true,
-      usecolormap: true,
-      highlightcolor:"#42f462",
-      project:{z: true}
-    }
-  }
-}];
-
-let saddlePoint = [12, 6, 57];
-
-var layout = {
-  title: 'Saddle Point Mt Bruno Elevation With Projected Contours',
-  scene: {camera: {eye: {x: 1.87, y: 0.88, z: -0.64}}},
-  autosize: false,
-  width: 500,
-  height: 500,
-  margin: {
-    l: 65,
-    r: 50,
-    b: 65,
-    t: 90,
-  },
- };
-
-Plotly.newPlot('myDiv', data, layout);
-Plotly.addTraces('myDiv', [{
-    type: 'scatter3d',
-    name: 'Saddle Point',
-    x:[12], 
-    y:[6], 
-    z:[57],
-     }])
-});
-} 
-
-document.getElementById("submitSolution").onclick = function() {
-    let form = document.getElementById("studentAnswerForm").value
-    console.log(title)
-    //dot
-    if (title.substring(0, 1) === 'D') {
-        console.log('true')
-        if (parseInt(form) === parseInt(dotProduct)) {
-            console.log("correct");
-        }
-        else {
-            console.log('incorrect');
-        }
-    }
-    // cross
-    if (title.substring(0, 1) === 'C') {
-        console.log('true');
-        form = form.split(',');
-        console.log(form)
-        if (parseInt(form[0]) === parseInt(crossProduct[0]) && 
-            parseInt(form[1]) === parseInt(crossProduct[1]) &&
-            parseInt(form[2]) === parseInt(crossProduct[2])) {
-            console.log('correct')
-        }
-        else {
-            console.log('incorrect');
-        }
-    }
-    // mult 4
-    let res = []
-    if (title === "" && form != null) {
-        if (form.constructor != Array) {
-            form = form.split(',').map(Number);
-            console.log(form)
-            console.log('hi')
-        }
-        
-        for(let i = 0; i < form.length; i ++) {
-            res.push(form[i]);
-        } 
-        let formMat4 = mat4.fromValues(
-            res[0],res[1], res[2], res[3],
-            res[4], res[5], res[6], res[7],
-            res[8], res[9], res[10], res[11],
-            res[12], res[13], res[14], res[15]
-        )
-
-        console.log(['here is Answer: ', M, 'Here is form ', formMat4]);
-        if (mat4.equals(M, formMat4)) {
-            console.log('correct');
-        }
-        if (!mat4.equals(M, formMat4)) {
-            console.log('incorrect')
-        }
-    }   
-}
-
-
-
-
-
-
-
-
-
-
-
-

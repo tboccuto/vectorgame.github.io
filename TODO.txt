@@ -1,16 +1,17 @@
-  TODO: [1] implement this with https://plotly.com/javascript/3d-line-plots/
+  TODO:
+       ✅  [1] implement this with https://plotly.com/javascript/3d-line-plots/
        Consider the random generations of lines, compute some operation, 
         then check the solution type in form against solution in glMatrix lib, consider rounding
         for pen & paper work.
        ✅ [2] also consider keeping index.html the only static page.
        ✅ [3] Get three different vector questions, one for vector construction, 
         dot product, cross product.
-        [4] If time permits, have a plug-in of some work we have done in CS476.
+       ✅  [4] If time permits, have a plug-in of some work we have done in CS476. 
+       [4.5] Make rectangle do kickflip in 3d w shadderrrrssss
        ✅ [5] Now we need to incoroporate the random generation of vectors
-       [6] Fix bug in concatenation mat mult KaTex 
+      ✅ [6] Fix bug in concatenation mat mult KaTex 
        [7] need to remove latex code upon clicking another button ie clear current latex if button clicked again
-       [8] have plot showing then upon update plot button clear plot see plot 1 for rest
-       [9] add sa
+       ✅  [8] have plot showing then upon update plot button clear plot see plot 1 for rest
 
 
 

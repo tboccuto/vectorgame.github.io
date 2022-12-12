@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +34,83 @@
             <div id="practice"> Click here to practice vector operations & more
             </div>
         </a>
+        <canvas id="myCanvas">
+            <script src="three.js"></script>
+            <script>
+            var renderer;
+            var scene;
+            var camera;
+            myCanvas = document.getElementById('myCanvas');
+            //init renderer
+            renderer = new THREE.WebGLRenderer({
+            canvas: myCanvas, 
+            antialias: true
+            });
+            renderer.setClearColor(0x000000);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth * .5, window.innerHeight * .44);
+
+            // scene
+            scene = new THREE.Scene();
+            var material = new THREE.MeshLambertMaterial();
+            var material2 = new THREE.MeshPhongMaterial({color: 0x000000});
+            var material3 = new THREE.MeshStandardMaterial({color: 0x32CD32}); 
+            var geometry3 = new THREE.PlaneGeometry(10000, 10000, 100, 100);
+            
+            // torus
+            var geometry = new THREE.TorusGeometry(100, 30, 16, 100 );
+            var mesh = new THREE.Mesh(geometry, material);
+            mesh.position.z = -100;
+            mesh.position.x = -100;
+            mesh.position.y = 10
+            scene.add(mesh);
+
+            var mesh3 = new THREE.Mesh(geometry3, material3);
+            mesh3.rotation.x = -90 * (Math.PI / 180);
+            mesh3.position.y = -100;
+            scene.add(mesh3);
+
+            // ambient light 
+            var light = new THREE.AmbientLight(0xffffff, .2);
+            scene.add(light);
+
+            // pointlight
+            var light = new THREE.PointLight(0xffffff, 2.0, 600);
+            light.position.set(100, -50, -50);
+            scene.add(light);
+            light.castShadow = true;
+            light.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 100, 1, 500, 1000 ) );
+            camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 300, 10000 );
+            render();
+            var delta = 0;
+            
+            function render() { 
+                delta += 0.01;
+                camera.lookAt(light.position);
+                camera.position.x = Math.sin(delta) * 2000;
+                camera.position.z = Math.cos(delta) * 2000;
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+            </script>
+        </canvas>
+        <div id="bonus-div">
+            <form>
+                <br>
+                <label form="bonus">Bonus: How many handles must a torus have?</label><br>
+                <input type="text" id="bonusAnswerForm" name="bonusAnswer" style="  width: 60%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
+            </form>
+        
+            <button id = "bonusQuestionButton">Submit</button>
+            <div id="tonyHawk">
+                <img id='tonyHawkImg' src="" style="   width: 100%;
+                    height: auto;
+                    overflow: hidden;"/>
+            </div>
+        </div>
     </div>
     <script src="quiz.js"></script>
 </body>

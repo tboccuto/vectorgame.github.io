@@ -16,14 +16,14 @@
   <button name='button' id="dotProductButton"> Dot Product</button>
   <button id="crossProductButton"> Cross Product</button>
   <button id="matrixMultiplicationButton"> Matrix Multiplication</button>
-  <button id="surfaceContourButton">Saddle point</button>
+  <button id="surfaceContourButton">Visualize Extremas</button>
   <br>
   <br>
 </header>
 <head>
-
+  <script src = "gl-matrix-min.js"></script>
+  <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
-  <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'> </script>
  </head>
 <body>
   <p id="symbolicMath"></p>
@@ -112,9 +112,6 @@
   </script>
   </div>
 </body>
-
-
-
 <form>
   <br>
   <label form="studentsAnswer">Submit your solution below row major order</label><br>
@@ -124,6 +121,14 @@
   box-sizing: border-box;"><br>
 </form>
 <button id = "submitSolution">Submit</button>
+<br><br>
+<div id="container2">
+<div id="imageSolution">
+  <img id='imagesol' src="" style="   width: 100%;
+      height: auto;
+      overflow: hidden;"/>
+</div>
+</div>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/katex.min.css" integrity="sha384-Juol1FqnotbkyZUT5Z7gUPjQ9gzlwCENvUZTpQBAPxtusdwFLRy382PSDx5UUJ4/" crossorigin="anonymous">
 <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
@@ -134,5 +139,6 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.3/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
   onload="renderMathInElement(document.body);"></script>
 <script src = "gl-matrix-min.js"></script>
-<script src ="quiz.js"></script>
+<script src ="vector.js"></script>
+<script src="quiz.js"></script>
 </html>
