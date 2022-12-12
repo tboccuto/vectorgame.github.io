@@ -15,16 +15,6 @@ const timeGauge = document.getElementById("timeGauge");
 const progress = document.getElementById("progress");
 const scoreDiv = document.getElementById("scoreContainer");
 const practice = document.getElementById("practice");
-const dotProductButton = document.getElementById("dotProductButton");
-const crossProductButton = document.getElementById("crossProductButton");
-const matrixMultiplicationButton = document.getElementById("matrixMultiplicationButton");
-const homeButton = document.getElementById("homeButton");
-const symbolicMath = document.getElementById("symbolicMath");
-const plotButton = document.getElementById("myDiv");
-const surfaceContour = document.getElementById("surfaceContourButton");
-const studentAnswerFormText = document.getElementById("studentAnswerForm");
-const submitForm = document.getElementById("submitSolution");
-const myCanvasID = document.getElementById("myCanvas");
 
 //Warm up question
 document.getElementById("bonusQuestionButton").addEventListener('click', bonusButtonClick)
