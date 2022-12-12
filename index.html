@@ -43,9 +43,8 @@
             myCanvas = document.getElementById('myCanvas');
             //init renderer
             renderer = new THREE.WebGLRenderer({
-            canvas: myCanvas, 
-            antialias: true
-            });
+                canvas: myCanvas, 
+                antialias: true });
             renderer.setClearColor(0x000000);
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth * .5, window.innerHeight * .44);

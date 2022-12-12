@@ -33,7 +33,6 @@ function bonusButtonClick () {
         //document.getElementById("tonyHawk").innerHTML += 'img/communistManifestoTralie.jpeg';
         document.getElementById('tonyHawk').innerHTML += "That is correct! \n Refresh the page if desired ig"+ "<br> <br> <br>";
         let image = document.getElementById('tonyHawkImg').src ='img/communistManifestoTralie.jpeg';
-        let timer = 30;
         let audio = new Audio('audio/celebration.mp3');
         audio.play();
    }
